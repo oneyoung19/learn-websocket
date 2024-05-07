@@ -9,6 +9,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/sse',
+    name: 'SSE',
+    component: () => import('@/views/SSE')
+  },
+  {
+    path: '/websocket',
+    name: 'Websocket',
+    component: () => import('@/views/Websocket')
   }
 ]
 
