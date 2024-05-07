@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    home
+    <el-button @click="$router.push({ name: 'SSE' })">SSE</el-button>
+    <el-button @click="$router.push({ name: 'Websocket' })">websocket</el-button>
   </div>
 </template>
 
