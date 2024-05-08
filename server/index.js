@@ -1,6 +1,9 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const PORT = 3000
+
+app.use(cors())
 
 app.get('/api/sse', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream')
@@ -16,9 +19,9 @@ app.get('/api/sse', (req, res) => {
       clearInterval(timer)
       return
     }
-    const data = { message: 'HelloWorld', timestamp: newDate() }
+    const data = { message: 'HelloWorld', timestamp: Date.now() }
     res.write(`data:${JSON.stringify(data)}\n\n`)
-  })
+  }, 1000)
 })
 
 app.listen(PORT, () => {
