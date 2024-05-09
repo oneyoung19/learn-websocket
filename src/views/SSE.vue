@@ -20,15 +20,23 @@ export default {
   },
   created () {
     const URL = 'http://localhost:3000/api/sse'
-    // axios.get(URL).then(res => {
-    //   console.log(res)
-    // })
-    const evtSource = new EventSource(URL)
+    const source = new EventSource(URL)
+    console.log(source, source.readyState)
 
-    evtSource.onmessage = event => {
-      const eventObject = JSON.parse(event.data)
-      const message = 'Message: ' + eventObject.message + ' at ' + eventObject.timestamp
-      this.sseList.push(message)
+    source.onmessage = event => {
+      const { data } = event
+      const parseData = JSON.parse(data)
+      const { message, timestamp } = parseData
+      console.log(message)
+      this.sseList.push(`Message: ${message} at ${timestamp}`)
+      if (message === 'close') {
+        // 一定要主动close 否则浏览器会间隔性的无休止
+        source.close()
+      }
+    }
+
+    source.onerror = event => {
+      console.error(event)
     }
   },
   methods: {
