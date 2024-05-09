@@ -15,13 +15,14 @@ app.get('/api/sse', (req, res) => {
   const timer = setInterval(() => {
     if (Date.now() - startTime >= 3000) {
       clearInterval(timer)
-      // res.write('event:close\ndata:{}\n\n')
+      // 测试发现 id字段不在data字段后 也起作用
+      res.write(`event:foo\nid:foo\nretry: 10000\ndata:{ message: 'foo' }\n\n`)
       const data = { message: 'close', timestamp: new Date() }
       res.write(`data:${JSON.stringify(data)}\n\n`)
+      // res.end() 不会关闭SSE连接 但会触发error事件监听
       res.end()
       return
     }
-    console.log('server sse')
     const data = { message: 'HelloWorld', timestamp: new Date() }
     res.write(`data:${JSON.stringify(data)}\n\n`)
   }, 1000)

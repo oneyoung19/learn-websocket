@@ -21,16 +21,14 @@ export default {
   created () {
     const URL = 'http://localhost:3000/api/sse'
     const source = new EventSource(URL)
-    console.log(source, source.readyState)
 
     source.onmessage = event => {
       const { data } = event
       const parseData = JSON.parse(data)
       const { message, timestamp } = parseData
-      console.log(message)
       this.sseList.push(`Message: ${message} at ${timestamp}`)
       if (message === 'close') {
-        // 一定要主动close 否则浏览器会间隔性的无休止
+        // 一定要主动close 否则浏览器会间隔性的无休止调用SSE
         source.close()
       }
     }
@@ -38,6 +36,11 @@ export default {
     source.onerror = event => {
       console.error(event)
     }
+
+    source.addEventListener('foo', event => {
+      // 后续的不间断触发 会在请求头中设置字段Last-Event-Id
+      console.warn(event.data, event.lastEventId)
+    })
   },
   methods: {
   }
