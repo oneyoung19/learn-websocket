@@ -20,17 +20,11 @@ export default {
   },
   created () {
     const URL = 'http://localhost:3000/api/sse'
-    this.createAxios(URL)
     // this.createSSE(URL)
+    // this.createAxios(URL)
+    this.createFetch(URL)
   },
   methods: {
-    // axios会在res.send()触发后 接收到全量message 而非逐个接收
-    // [axios目前不支持接收stream](https://github.com/axios/axios/issues/479)
-    createAxios (url) {
-      return axios.get(url).then(res => {
-        console.log(res)
-      })
-    },
     createSSE (url) {
       const source = new EventSource(url)
 
@@ -52,6 +46,28 @@ export default {
       source.addEventListener('foo', event => {
         // 后续的不间断触发 会在请求头中设置字段Last-Event-Id
         console.warn(event.data, event.lastEventId)
+      })
+    },
+    // axios会在res.send()触发后 接收到全量message 而非逐个接收
+    // [axios目前不支持接收stream](https://github.com/axios/axios/issues/479)
+    createAxios (url) {
+      return axios.get(url).then(res => {
+        console.log(res)
+      })
+    },
+    createFetch (url) {
+      fetch(url).then(async res => {
+        const reader = res.body.getReader()
+        while (true) {
+          const result = await reader.read()
+          const { value, done } = result
+          const utf8Decoder = new TextDecoder('utf-8')
+          const data = utf8Decoder.decode(value, { stream: true })
+          console.log(data, done)
+          if (done) {
+            break
+          }
+        }
       })
     }
   }
