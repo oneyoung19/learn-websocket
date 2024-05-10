@@ -11,6 +11,7 @@
 
 <script>
 import axios from 'axios'
+import { fetchEventSource } from '@microsoft/fetch-event-source'
 
 export default {
   data () {
@@ -22,8 +23,9 @@ export default {
     const URL = 'http://localhost:3000/api/sse'
     // this.createSSE(URL)
     // this.createAxios(URL)
-    this.createXHR(URL)
+    // this.createXHR(URL)
     // this.createFetch(URL)
+    this.createFetchEventSource(URL)
   },
   methods: {
     createSSE (url) {
@@ -88,6 +90,13 @@ export default {
           if (done) {
             break
           }
+        }
+      })
+    },
+    async createFetchEventSource (url) {
+      await fetchEventSource(url, {
+        onmessage (event) {
+          console.log(event.data, event)
         }
       })
     }
