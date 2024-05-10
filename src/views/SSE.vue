@@ -21,11 +21,11 @@ export default {
   },
   created () {
     const URL = 'http://localhost:3000/api/sse'
-    // this.createSSE(URL)
+    this.createSSE(URL)
     // this.createAxios(URL)
     // this.createXHR(URL)
     // this.createFetch(URL)
-    this.createFetchEventSource(URL)
+    // this.createFetchEventSource(URL)
   },
   methods: {
     createSSE (url) {
