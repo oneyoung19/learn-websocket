@@ -16,7 +16,7 @@ app.get('/api/sse', (req, res) => {
     if (Date.now() - startTime >= 3000) {
       clearInterval(timer)
       // 测试发现 id字段不在data字段后 也起作用
-      res.write(`event:foo\nid:foo\nretry: 10000\ndata:{ message: 'foo' }\n\n`)
+      res.write('event:foo\nid:foo\nretry: 10000\ndata:{ message: \'foo\' }\n\n')
       const data = { message: 'close', timestamp: new Date() }
       res.write(`data:${JSON.stringify(data)}\n\n`)
       // res.end() 不会关闭SSE连接 但会触发error事件监听

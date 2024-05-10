@@ -22,7 +22,8 @@ export default {
     const URL = 'http://localhost:3000/api/sse'
     // this.createSSE(URL)
     // this.createAxios(URL)
-    this.createFetch(URL)
+    this.createXHR(URL)
+    // this.createFetch(URL)
   },
   methods: {
     createSSE (url) {
@@ -54,6 +55,26 @@ export default {
       return axios.get(url).then(res => {
         console.log(res)
       })
+    },
+    // XHR + streaming
+    createXHR (url) {
+      const xhr = new XMLHttpRequest()
+      xhr.open('GET', url, true)
+      xhr.timeout = 10000
+      xhr.ontimeout = function () {
+        console.error('Request timed out!')
+      }
+      xhr.onprogress = function () {
+        const responseText = xhr.responseText
+        console.error(xhr.prevLen)
+        const chunk = responseText.slice(xhr.prevLen)
+        xhr.prevLen = responseText.length
+        console.log(chunk)
+      }
+      xhr.onload = function () {
+        console.log('Done!')
+      }
+      xhr.send()
     },
     createFetch (url) {
       fetch(url).then(async res => {

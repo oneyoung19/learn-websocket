@@ -33,3 +33,4 @@
 - [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
 - [Server-Sent Events 教程——阮一峰](https://www.ruanyifeng.com/blog/2017/05/server-sent_events.html)
 - [现代教程之Server Sent Events](https://zh.javascript.info/server-sent-events)
+- [你可能不知道的浏览器实时通信方案](https://segmentfault.com/a/1190000019697463)
