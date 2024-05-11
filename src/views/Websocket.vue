@@ -11,11 +11,11 @@ export default {
     }
   },
   mounted () {
-    const URL = 'http://localhost:3000/api/websocket'
-    const WS_URL = 'ws://localhost:3000/api/websocket'
-    axios.get(URL).then(res => {
-      console.log(res)
-    })
+    // const URL = 'http://localhost:3000/api/websocket'
+    const WS_URL = 'ws://localhost:8080/api/websocket'
+    // axios.get(URL).then(res => {
+    //   console.log(res)
+    // })
     this.createWebsocket(WS_URL)
   },
   methods: {
