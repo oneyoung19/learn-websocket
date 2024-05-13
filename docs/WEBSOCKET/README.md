@@ -37,5 +37,12 @@ Sec-Websocket-Accept: 6KI8x4yb7zRbvjrYKttNMq8yiAg=
 第三方库及框架：
 
 - [ws](https://github.com/websockets/ws)
-- [socket.io](https://github.com/socketio/socket.io)更推荐
+- [socket.io](https://github.com/socketio/socket.io)
 
+:::tip
+`ws` 其实相当于 `Websocket` 在 `node` 环境下的 `polyfill` 库。
+
+而 `socket.io` 则能够支持 `client` 和 `server` 端，而且对于其他语言如 `java`、`python` 等，也有对应版本。
+
+整体而言，`socket.io` 的功能更完整，周边生态更好。
+:::
